@@ -10,15 +10,15 @@ pipeline {
     PORT = "5173"
   }
 
+  stages {
     stage('Clone') {
-        steps {
-            sh 'git config --global http.postBuffer 524288000'
-            retry(2) {
-            git changelog: false, poll: false, url: 'https://github.com/Salahudin-cloud/vue-ci-cd.git', shallow: true
-            }
+      steps {
+        sh 'git config --global http.postBuffer 524288000'
+        retry(2) {
+          git changelog: false, poll: false, url: 'https://github.com/Salahudin-cloud/vue-ci-cd.git', shallow: true
         }
+      }
     }
-
 
     stage('Install Dependencies') {
       steps {
@@ -32,7 +32,7 @@ pipeline {
         sh 'yarn build'
       }
     }
-
+    
     stage('Deploy with Nginx') {
       steps {
         sh 'sudo rm -rf /var/www/html/*'
@@ -48,4 +48,5 @@ pipeline {
         sh 'pm2 save'
       }
     }
+  }
 }
