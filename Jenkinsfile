@@ -5,6 +5,11 @@ pipeline {
     nodejs 'node23'
   }
 
+  environment {
+    APP_NAME = "vue-app"
+    PORT = "5173"
+  }
+
   stages {
     stage('Clone') {
       steps {
@@ -25,11 +30,24 @@ pipeline {
       }
     }
 
-    stage('Deploy Locally') {
+    stage('Deploy with Nginx') {
       steps {
-        sh 'fuser -k 5173/tcp || true'
-        sh 'npm install -g serve'
-        sh 'serve -s dist -l 5173 &'
+        sh 'sudo rm -rf /var/www/html/*'
+        sh 'sudo cp -r dist/* /var/www/html/'
+      }
+    }
+
+    stage('Serve with PM2 (optional)') {
+      steps {
+
+        sh 'npm install -g pm2'
+
+        sh 'pm2 delete ${APP_NAME} || true'
+
+        sh 'pm2 serve dist ${PORT} --name ${APP_NAME} --spa'
+
+
+        sh 'pm2 save'
       }
     }
   }
