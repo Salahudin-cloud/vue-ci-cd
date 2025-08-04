@@ -42,7 +42,7 @@ ngrok config add-authtoken <your-authtoken>
 ## 3️⃣ Jenkins Setup
 
 ### A. Install Required Plugins
-
+visit site : `https://plugins.jenkins.io/` to donwload and get the plugin 
 - NodeJS Plugin
 - Git Plugin
 - GitHub Integration Plugin
