@@ -39,14 +39,9 @@ pipeline {
 
     stage('Serve with PM2 (optional)') {
       steps {
-
         sh 'npm install -g pm2'
-
         sh 'pm2 delete ${APP_NAME} || true'
-
         sh 'pm2 serve dist ${PORT} --name ${APP_NAME} --spa'
-
-
         sh 'pm2 save'
       }
     }
