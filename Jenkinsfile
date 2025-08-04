@@ -48,5 +48,4 @@ pipeline {
         sh 'pm2 save'
       }
     }
-  }
 }
